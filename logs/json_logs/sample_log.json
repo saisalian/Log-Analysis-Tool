@@ -1,0 +1,2 @@
+{"timestamp": "2024-12-04T10:32:29Z", "ip": "192.168.1.1", "status": "200", "message": "GET /index.html"}
+{"timestamp": "2024-12-04T10:35:10Z", "ip": "10.0.0.5", "status": "403", "message": "POST /login"}
