@@ -10,3 +10,8 @@ A Python-based tool to parse, analyze, and report on logs for security incident 
 - `src/`: Contains code modules
 - `logs/`: Stores log files for analysis
 - `tests/`: Contains test scripts
+
+## Log Ingestion
+The tool currently supports:
+- Parsing Apache/NGINX logs using regex.
+- Parsing JSON logs into a structured format using the `json` library.
