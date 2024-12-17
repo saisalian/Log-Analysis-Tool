@@ -23,11 +23,19 @@ def read_apache_logs(file_path):
     return pd.DataFrame(log_entries)
 
 def filter_suspicious_apache_logs(df):
-    # Filter rows with status codes 403 or 500
-    suspicious_statuses = ["403", "500"]
-    return df[df["status"].isin(suspicious_statuses)]
+    # Define suspicious criteria
+    suspicious_statuses = ["403", "500", "404", "401"]  # Common suspicious status codes
+    suspicious_methods = ["PUT", "DELETE"]  # Potentially dangerous HTTP methods
+    suspicious_urls = ["/admin", "/login", "/wp-admin", "/config", "/backup"]  # High-risk URLs
 
-
+    # Filter logs based on criteria
+    suspicious_df = df[
+        (df["status"].isin(suspicious_statuses)) |  # Check for suspicious statuses
+        (df["method"].isin(suspicious_methods)) |  # Check for suspicious methods
+        (df["url"].str.contains("|".join(suspicious_urls), case=False, na=False))  # Check for suspicious URLs
+    ]
+    
+    return suspicious_df
 
 def read_json_logs(file_path):
     log_entries = []
@@ -57,8 +65,6 @@ def filter_suspicious_json_logs(df):
             df["message"].str.contains("failed|unauthorized|denied", case=False, na=False)
         ]
     return suspicious_df
-
-
 
 if __name__ == "__main__":
     print(f"Current working directory: {os.getcwd()}")
