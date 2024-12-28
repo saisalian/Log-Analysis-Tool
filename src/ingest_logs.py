@@ -66,6 +66,28 @@ def filter_suspicious_json_logs(df):
         ]
     return suspicious_df
 
+def generate_incident_report(apache_df, json_df, output_path="incident_report.md"):
+
+    with open(output_path, 'w') as report:
+        report.write("# Incident Report\n")
+        report.write("This report summarizes suspicious activities detected in logs.\n\n")
+
+        # Apache logs section
+        report.write("## Suspicious Apache Logs\n")
+        if apache_df.empty:
+            report.write("No suspicious Apache logs found.\n")
+        else:
+            report.write(apache_df.to_markdown(index=False) + "\n\n")
+
+        # JSON logs section
+        report.write("## Suspicious JSON Logs\n")
+        if json_df.empty:
+            report.write("No suspicious JSON logs found.\n")
+        else:
+            report.write(json_df.to_markdown(index=False) + "\n\n")
+    
+    print(f"Incident report generated at: {output_path}")
+
 if __name__ == "__main__":
     print(f"Current working directory: {os.getcwd()}")
 
@@ -90,3 +112,6 @@ if __name__ == "__main__":
     suspicious_json = filter_suspicious_json_logs(json_df)
     print("\nSuspicious JSON Logs:")
     print(suspicious_json)
+
+    # Generate incident report
+    generate_incident_report(suspicious_apache, suspicious_json)
