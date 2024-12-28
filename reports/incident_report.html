@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { color: #333; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+    <h1>Incident Report</h1>
+    <h2>Suspicious Apache Logs</h2>
+    <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>ip</th>
+      <th>datetime</th>
+      <th>method</th>
+      <th>url</th>
+      <th>status</th>
+      <th>size</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>10.0.0.5</td>
+      <td>04/Dec/2024:10:35:10 +0000</td>
+      <td>POST</td>
+      <td>/login</td>
+      <td>403</td>
+      <td>564</td>
+    </tr>
+    <tr>
+      <td>192.168.1.2</td>
+      <td>04/Dec/2024:11:00:00 +0000</td>
+      <td>GET</td>
+      <td>/admin</td>
+      <td>500</td>
+      <td>789</td>
+    </tr>
+    <tr>
+      <td>172.16.0.1</td>
+      <td>04/Dec/2024:11:15:42 +0000</td>
+      <td>DELETE</td>
+      <td>/config</td>
+      <td>200</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>172.16.0.2</td>
+      <td>04/Dec/2024:11:20:10 +0000</td>
+      <td>PUT</td>
+      <td>/backup</td>
+      <td>403</td>
+      <td>50</td>
+    </tr>
+  </tbody>
+</table>
+    <h2>Suspicious JSON Logs</h2>
+    <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>timestamp</th>
+      <th>ip</th>
+      <th>status</th>
+      <th>message</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2024-12-04T10:35:10Z</td>
+      <td>10.0.0.5</td>
+      <td>403</td>
+      <td>POST /login</td>
+      <td>ERROR</td>
+    </tr>
+    <tr>
+      <td>2024-12-04T11:00:00Z</td>
+      <td>192.168.1.2</td>
+      <td>500</td>
+      <td>Failed to fetch admin data</td>
+      <td>ERROR</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

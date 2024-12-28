@@ -66,27 +66,37 @@ def filter_suspicious_json_logs(df):
         ]
     return suspicious_df
 
-def generate_incident_report(apache_df, json_df, output_path="incident_report.md"):
+def generate_incident_report(apache_df, json_df):
+    """
+    Generate an incident report in HTML format based on suspicious logs.
 
-    with open(output_path, 'w') as report:
-        report.write("# Incident Report\n")
-        report.write("This report summarizes suspicious activities detected in logs.\n\n")
+    Args:
+        apache_df (pd.DataFrame): DataFrame of suspicious Apache logs.
+        json_df (pd.DataFrame): DataFrame of suspicious JSON logs.
+    """
+    report_path = "C:/Log_Analysis_Tool/reports/incident_report.html"
+    template_path = "C:/Log_Analysis_Tool/src/incident_report_template.html"
 
-        # Apache logs section
-        report.write("## Suspicious Apache Logs\n")
-        if apache_df.empty:
-            report.write("No suspicious Apache logs found.\n")
-        else:
-            report.write(apache_df.to_markdown(index=False) + "\n\n")
+    # Ensure the reports directory exists
+    os.makedirs(os.path.dirname(report_path), exist_ok=True)
 
-        # JSON logs section
-        report.write("## Suspicious JSON Logs\n")
-        if json_df.empty:
-            report.write("No suspicious JSON logs found.\n")
-        else:
-            report.write(json_df.to_markdown(index=False) + "\n\n")
-    
-    print(f"Incident report generated at: {output_path}")
+    # Read the HTML template
+    with open(template_path, "r", encoding="utf-8") as template_file:
+        html_template = template_file.read()
+
+    # Generate tables from DataFrames
+    apache_table = apache_df.to_html(index=False, escape=False)
+    json_table = json_df.to_html(index=False, escape=False)
+
+    # Replace placeholders in the template
+    html_content = html_template.replace("<!-- APACHE_TABLE -->", apache_table)
+    html_content = html_content.replace("<!-- JSON_TABLE -->", json_table)
+
+    # Write the final HTML content to the report file
+    with open(report_path, "w", encoding="utf-8") as report_file:
+        report_file.write(html_content)
+
+    print(f"Incident report generated at: {report_path}")
 
 if __name__ == "__main__":
     print(f"Current working directory: {os.getcwd()}")
@@ -113,5 +123,5 @@ if __name__ == "__main__":
     print("\nSuspicious JSON Logs:")
     print(suspicious_json)
 
-    # Generate incident report
+    # Generate HTML report
     generate_incident_report(suspicious_apache, suspicious_json)
