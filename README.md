@@ -28,6 +28,3 @@ The tool currently supports:
   - Filters logs containing the `ERROR` level or suspicious messages related to failed access attempts.
   - Detects logs with suspicious status codes (`401`, `403`, `500`).
 
-## Next Step - Incident Report Generation  
-- The tool will generate incident reports for suspicious logs, which can be useful for tracking security incidents and improving system monitoring.
-
